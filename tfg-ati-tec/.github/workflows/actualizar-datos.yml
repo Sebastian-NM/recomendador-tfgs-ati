@@ -1,0 +1,30 @@
+name: Actualizar datos TFG
+
+on:
+  schedule:
+    # Corre todos los lunes a las 6am (UTC)
+    - cron: '0 6 * * 1'
+  workflow_dispatch: # También permite correrlo manualmente desde GitHub
+
+jobs:
+  actualizar:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Extraer datos del repositorio TEC
+        run: node extraer.mjs
+
+      - name: Commitear cambios si los hay
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add references/tfg_ati.json
+          git diff --cached --quiet || git commit -m "Actualizar datos TFG $(date +'%Y-%m-%d')"
+          git push
