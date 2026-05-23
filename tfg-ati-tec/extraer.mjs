@@ -5,7 +5,7 @@
 import { writeFileSync, mkdirSync } from "fs";
 
 const BASE = "https://repositoriotec.tec.ac.cr/rest";
-const ATI_UUID = "9911872e-5665-4364-b476-f15a6dcfa6be";
+const ATI_UUID = "35b3fd9c-57d2-4fbb-aef2-5bdb533e1015";
 
 async function fetchAllItems() {
   const items = [];
